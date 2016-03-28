@@ -32,6 +32,6 @@ Pour créer une nouvelle tâche et étendre l'API, il faut :
 
 ## Exemple ##
 
-Un programme d'exemple est fournit. Pour l'essayer :
+Un programme d'exemple est fourni. Pour l'essayer :
 `make` à la racine du projet puis `cd sample && make`.
-`./sample/sample`
+`./sample/sample` pour l'exécuter.

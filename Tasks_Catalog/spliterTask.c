@@ -1,5 +1,6 @@
 // support for big files
 #define _FILE_OFFSET_BITS 64
+#define BUFFER_SIZE 2048
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,10 +10,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#include "configuration.h"
-#include "utils.h"
-#include "task.h"
-#include "task_queue.h"
+#include "task_api.h"
 #include "spliterTask.h"
 
 struct spliter_params {
@@ -66,15 +64,15 @@ void spliter(task_queue_t *tq, task_t *task)
     setlocale(LC_ALL, "fr_FR.utf8");
 
     in = fopen(params->filepath, "r");
-
-    if (in == NULL)
-        SYSERR_EXIT("fopen input file in spliter");
+    TEST_ALLOC(in, "fopen input file in spliter");
 
     fwide(in, 1);
 
     // calcul de la taille minimale des parties
-    if (stat(params->filepath, &st) != 0)
-        SYSERR_EXIT("stat filename in spliter");
+    if (stat(params->filepath, &st) != 0) {
+        fprintf(stderr, "stat filename in spliter\n");
+        exit(EXIT_FAILURE);
+    }
     part = st.st_size/params->nb_parts;
 
     start = 0;
@@ -92,7 +90,8 @@ void spliter(task_queue_t *tq, task_t *task)
                     addTask(tq, (*newTask)(params->filepath, start, nbWchar));
                     break;
                 } else {
-                    SYSERR_EXIT("fgetws in spliter");
+                    fprintf(stderr, "fgetws in spliter\n");
+                    exit(EXIT_FAILURE);
                 }
             }
             nbWchar += wcslen(buffer);
@@ -105,8 +104,10 @@ void spliter(task_queue_t *tq, task_t *task)
         }
         if (feof(in))
             break;
-        if ((start = ftello(in)) == -1)
-            SYSERR_EXIT("ftello in spliter");
+        if ((start = ftello(in)) == -1) {
+            fprintf(stderr, "ftello in spliter\n");
+            exit(EXIT_FAILURE);
+        }
     }
     fclose(in);
     free(params->filepath);
