@@ -1,32 +1,47 @@
-# Object files
+# Compiled source #
+###################
+*.dll
+*.exe
 *.o
-*.ko
-*.obj
-*.elf
+*.so
+*.a
+*.so.*
+*.out
 
-# Precompiled Headers
+# Packages #
+############
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.war
+*.ear
+*.rar
+*.tar
+*.zip
+
+# Logs, data and databases #
+############################
+*.log
+*.out
+*.sqlite
+*.xml
+
+# OS and IDE generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*~
+*.swp
+.remote-sync.json
+
+# Precompiled Headers #
+#######################
 *.gch
 *.pch
-
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
-
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
-
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
-
-# Debug files
-*.dSYM/
